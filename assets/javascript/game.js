@@ -22,9 +22,10 @@ function player() {
         var json_obj = JSON.parse(Httpreq.responseText);
         // for this use, only retun one word
         this.currentWord = json_obj.words[0];
+//        this.currentWord = "wpwpwpwpwpwpwpwz"
     }
 
-    this.reset = async function() {
+    this.reset = function() {
         // fetch a new word
         this.getNewWord();
         // ensur there are no non-letter characters in string
@@ -63,7 +64,9 @@ function player() {
                     var winCheck = this.arrayCompare();
                     if (winCheck) {
                         this.wins++;
-                        this.reset();
+                        if (confirm(this.currentWord + " play again?")) {
+                            this.reset();
+                        }
                     }
                 } else {
                     //decrement remaining guess count
@@ -108,7 +111,9 @@ function player() {
                             // draw noose
                             drawLine(80, 20, 80, 50);
                             this.losses++;
-                            this.reset();
+                            if (confirm(this.currentWord + " play again?")) {
+                                this.reset();
+                            }
                             break;
                     }
                 }
@@ -160,6 +165,7 @@ function resetDisplay() {
     ctx.clearRect(0, 0, 220, 300);
     // reset display variables
     document.getElementById("guesses-remaining").innerHTML = playerObj.guessesRemaining;
+    displayMaskewdWord();
     document.getElementById("wins").innerHTML = playerObj.wins;
     document.getElementById("losses").innerHTML = playerObj.losses;
 
@@ -168,14 +174,6 @@ function resetDisplay() {
         var set = document.getElementById(letter);
         document.getElementById(letter).style.textDecoration = '';
     });
-    document.getElementById("overlay").style.display = "inline";
-    document.getElementById("modal").style.display = "inline";
-    var wordHTML = '';
-    playerObj.currentWord.forEach((letter,index) => {
-        wordHTML = wordHTML + letter;
-    });
-    document.getElementById("modal").innerHTML = wordHTML + "<br>Press any key to play again.";
-    window.addEventListener('keypress', pressed);
 }
 
 function drawLine(xStart, yStart, xEnd, yEnd) {
@@ -216,16 +214,9 @@ function displayMaskewdWord() {
     document.getElementById("word").innerHTML = wordHTML;
 }
 
-function pressed() {
-    document.getElementById("overlay").style.display = "none";
-    document.getElementById("modal").style.display = "none";
-}
-
 var playerObj = new player();
 drawAlphabet();
 playerObj.reset();
-window.addEventListener('keyup', pressed);
 document.onkeypress = function (event) {
     playerObj.inputCheck(event)
 }
-
