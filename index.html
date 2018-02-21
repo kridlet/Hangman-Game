@@ -7,34 +7,35 @@
     <link href="https://fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="assets/css/reset.css">
     <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="icon" type="image/png" href="images/favicon.png">
     <title>Document</title>
 </head>
 
 <body>
-
+    <div class="overlay" id="overlay"></div>
+    <div class="modal" id="modal">Press anykey to begin.</div>
     <div class="container">
-        <h4>Hangman</h4>
-        <p>Press a letter to begin guessing the word.</p>
+        <h4>Word Murderer</h4>
+        <p>Press a letter to begin condemning this stick figure to its death.</p>
         <div class="contentBox">
             <canvas id="myCanvas" width="220" height="300">Your browser does not support the HTML5 canvas tag.</canvas>
         </div>
         <div class="contentBox">
-            <div id="alphabet">
-                <div id="stats">
-                    <p>
-                        <span id="word"></span>
-                    </p>
-                    <p>guesses remaining:
-                        <span id="guesses-remaining"></span>
-                    </p>
-                    <p>wins:
-                        <span id="wins"></span>
-                    </p>
-                    <p>losses:
-                        <span id="losses"></span>
-                    </p>
-                </div>
+            <div class="stats">
+                <p>
+                    <span id="word"></span>
+                </p>
+                <p>guesses remaining:
+                    <span id="guesses-remaining"></span>
+                </p>
+            </div>
+            <div id="alphabet"></div>
+            <div class="stats">
+                <p>wins:
+                    <span id="wins"></span>
+                </p>
+                <p>losses:
+                    <span id="losses"></span>
+                </p>
             </div>
         </div>
     </div>
