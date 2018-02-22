@@ -64,7 +64,12 @@ function player() {
                     var winCheck = this.arrayCompare();
                     if (winCheck) {
                         this.wins++;
-                        if (confirm(this.currentWord + " play again?")) {
+                        wordHTML = "";
+                        this.currentWord.forEach((letter,index) => {
+                            wordHTML = wordHTML + letter;
+                        });
+                        document.getElementById("word").innerHTML = wordHTML;
+                        if (confirm("Congratulations! Your word was " + wordHTML + "\n\nPlay again?")) {
                             this.reset();
                         }
                     }
@@ -111,7 +116,12 @@ function player() {
                             // draw noose
                             drawLine(80, 20, 80, 50);
                             this.losses++;
-                            if (confirm(this.currentWord + " play again?")) {
+                            var wordHTML = '';
+                            this.currentWord.forEach((letter,index) => {
+                                wordHTML = wordHTML + letter;
+                            });
+                            document.getElementById("word").innerHTML = wordHTML;
+                            if (confirm("Your word was " + wordHTML + "\n\nPlay again?")) {
                                 this.reset();
                             }
                             break;
