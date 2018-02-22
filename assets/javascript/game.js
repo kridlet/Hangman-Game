@@ -13,6 +13,7 @@ function player() {
         this.userStarted = 1;
         document.getElementById("overlay").style.display = "none";
         document.getElementById("modal").style.display = "none";
+        this.reset();
         // draw gallows
         drawLine(180, 280, 180, 20);
         drawLine(180, 20, 80, 20);
@@ -33,7 +34,6 @@ function player() {
         else if (winLose === "lose") {
             document.getElementById("modal").innerHTML = "Sorry! The word was " + wordHTML + ".\n\nPress any key to play again.";
         }
-        this.reset();
     }
 
     this.getNewWord = function(category) {
