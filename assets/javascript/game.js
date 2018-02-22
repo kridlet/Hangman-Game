@@ -6,7 +6,35 @@ function player() {
     this.currentWord = [];
     this.maskedWord = [];
     this.userSelection = '';
-    this.guessesRemaining = 8;
+    this.guessesRemaining = 7;
+    this.userStarted = 0;
+
+    this.begin = function() {
+        this.userStarted = 1;
+        document.getElementById("overlay").style.display = "none";
+        document.getElementById("modal").style.display = "none";
+        // draw gallows
+        drawLine(180, 280, 180, 20);
+        drawLine(180, 20, 80, 20);
+        drawLine(160, 280, 200, 280);
+    }
+
+    this.wordFinish = function(winLose) {
+        this.userStarted = 0;
+        document.getElementById("overlay").style.display = "inline";
+        document.getElementById("modal").style.display = "inline";
+        wordHTML = "";
+        this.currentWord.forEach((letter,index) => {
+            wordHTML = wordHTML + letter;
+        });
+        if (winLose === "win") {
+            document.getElementById("modal").innerHTML = "Congratulations! Your word was " + wordHTML + ".\n\nPress any key to play again.";
+        }
+        else if (winLose === "lose") {
+            document.getElementById("modal").innerHTML = "Sorry! The word was " + wordHTML + ".\n\nPress any key to play again.";
+        }
+        this.reset();
+    }
 
     this.getNewWord = function(category) {
         // api that returns random popular english words of 6 characters or more
@@ -37,7 +65,7 @@ function player() {
         }
         // reinitialize
         this.lettersGuessed = [];
-        this.guessesRemaining = 8;
+        this.guessesRemaining = 7;
         this.maskedWord = Array(this.currentWord.length).fill("_");
         // reset canvass and counts
         resetDisplay();
@@ -64,26 +92,13 @@ function player() {
                     var winCheck = this.arrayCompare();
                     if (winCheck) {
                         this.wins++;
-                        wordHTML = "";
-                        this.currentWord.forEach((letter,index) => {
-                            wordHTML = wordHTML + letter;
-                        });
-                        document.getElementById("word").innerHTML = wordHTML;
-                        if (confirm("Congratulations! Your word was " + wordHTML + "\n\nPlay again?")) {
-                            this.reset();
-                        }
+                        this.wordFinish("win");
                     }
                 } else {
                     //decrement remaining guess count
                     this.guessesRemaining--;
                     document.getElementById("guesses-remaining").innerHTML = this.guessesRemaining;
                     switch (this.guessesRemaining) {
-                        case 7:
-                            // draw gallows
-                            drawLine(180, 280, 180, 20);
-                            drawLine(180, 20, 80, 20);
-                            drawLine(160, 280, 200, 280);
-                            break;
                         case 6:
                             //draw head
                             drawCircle(80, 75, 25);
@@ -116,14 +131,7 @@ function player() {
                             // draw noose
                             drawLine(80, 20, 80, 50);
                             this.losses++;
-                            var wordHTML = '';
-                            this.currentWord.forEach((letter,index) => {
-                                wordHTML = wordHTML + letter;
-                            });
-                            document.getElementById("word").innerHTML = wordHTML;
-                            if (confirm("Your word was " + wordHTML + "\n\nPlay again?")) {
-                                this.reset();
-                            }
+                            this.wordFinish("lose");
                             break;
                     }
                 }
@@ -228,5 +236,10 @@ var playerObj = new player();
 drawAlphabet();
 playerObj.reset();
 document.onkeypress = function (event) {
-    playerObj.inputCheck(event)
+    if (playerObj.userStarted === 0) {
+        playerObj.begin();
+    }
+    else {
+        playerObj.inputCheck(event);
+    }
 }
