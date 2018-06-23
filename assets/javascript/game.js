@@ -38,18 +38,19 @@ function player() {
 
     this.getNewWord = function(category) {
         // api that returns random popular english words of 6 characters or more
-        var wordURL = "https://callo.io/word.php?";
-        var parameters = new URLSearchParams();
-        parameters.append('category', category);
-        parameters.append('api_key', '3jf0JSWj4)4jdnak*3ndksj349dHQoen');
-        parameters.append('results', '1');
-        var Httpreq = new XMLHttpRequest();
+//        var wordURL = "https://callo.io/word.php?";
+//        var parameters = new URLSearchParams();
+//        parameters.append('category', category);
+//        parameters.append('api_key', '3jf0JSWj4)4jdnak*3ndksj349dHQoen');
+//        parameters.append('results', '1');
+//        var Httpreq = new XMLHttpRequest();
         // do a synchronous request. this is depricated, but i don't want to deal with promises and fetch
-        Httpreq.open("get", wordURL + parameters, false);
-        Httpreq.send(null);
-        var json_obj = JSON.parse(Httpreq.responseText);
+//        Httpreq.open("get", wordURL + parameters, false);
+//        Httpreq.send(null);
+//        var json_obj = JSON.parse(Httpreq.responseText);
         // for this use, only retun one word
-        this.currentWord = json_obj.words[0];
+//        this.currentWord = json_obj.words[0];
+          this.currentWord = 'camaraderie';
 //        this.currentWord = "wpwpwpwpwpwpwpwz"
     }
 
